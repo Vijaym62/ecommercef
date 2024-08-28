@@ -1,0 +1,66 @@
+<div
+  class="p-1 h-screen w-full bg-white shadow-lg rounded-lg transition-transform transform hover:scale-105"
+>
+  <div class="p-1 h-full flex flex-col">
+    <!-- Product Image -->
+    <img
+      [src]="product.images[0]"
+      alt="Product Image"
+      class="w-full h-52 object-cover rounded-lg mr-4"
+      [routerLink]="'/product/' + product._id"
+    />
+
+    <!-- Product Name -->
+    <h2
+      class="text-lg font-semibold mt-2 text-gray-800"
+      [routerLink]="'/product/' + product._id"
+    >
+      {{ product.name }}
+    </h2>
+
+    <!-- Price and Discount -->
+    <div class="text-sm text-gray-600 mt-1">
+      <span class="font-semibold text-black-100">
+        <s>MRP: {{ product.price }}₹</s>
+      </span>
+      <span class="text-red-500 ml-2">{{ product.discount }}% off</span>
+    </div>
+
+    <!-- Special Price and MRP -->
+    <h4 class="text-green-500 mt-1">Special price</h4>
+    <p class="font-bold text-lg text-gray-800">
+      Rs : {{ SellingPrice(product) }}
+    </p>
+
+    <!-- Product Description -->
+    <p class="text-sm text-gray-600 mt-2 mb-4 flex-grow">
+      {{ product.shortdiscription }}
+    </p>
+
+    <!-- Action Buttons -->
+    <div class="flex justify-end mt-auto">
+      <button
+        mat-raised-button
+        color="warn mr-2 "
+        (click)="addToWishList(product)"
+      >
+        @if(isInWishlist(product)){
+        <mat-icon>favorite</mat-icon>
+
+        }@else {
+
+        <mat-icon>favorite_border</mat-icon>
+
+        }
+      </button>
+
+      <button mat-raised-button color="primary" (click)="addToCart(product)">
+        @if(isProductInCart(product._id!)){
+        <mat-icon>remove_shopping_cart</mat-icon>
+
+        }@else {
+        <mat-icon>add_shopping_cart</mat-icon> }
+      </button>
+    </div>
+  </div>
+</div>

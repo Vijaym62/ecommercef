@@ -1,0 +1,164 @@
+@if(product){
+<ng-container>
+  <div class="bg-gray-100">
+    <!-- Product Detail Page -->
+    <div class="mx-auto py-8 px-4">
+      <div class="flex flex-wrap -mx-4">
+        <!-- Product Gallery -->
+        <div class="w-full md:w-1/2 px-4 mb-8 md:mb-0">
+          <div class="bg-white rounded-lg shadow-lg p-2">
+            <img
+              [src]="mainImage"
+              class="w-screen h-3/5 rounded-lg mb-4 shadow-lg"
+            />
+            <div class="grid grid-cols-3 gap-2">
+              @for (url of product.images; track $index) {
+              <img
+                [src]="url"
+                class="bg-gray-100 h-28 rounded-lg cursor-pointer shadow-lg w-screen"
+                (click)="changeImage(url)"
+              />
+
+              }
+            </div>
+          </div>
+        </div>
+
+        <!-- Product Information -->
+        <div class="w-full md:w-1/2 px-4">
+          <!-- Product Title and Price -->
+          <div class="mb-6">
+            <h1 class="text-xl font-bold text-gray-800">{{ product.name }}</h1>
+
+            <p class="text-xl font-semibold text-blue-500 mt-2">
+              <s> Rs: {{ product.price }}₹</s>
+              {{ product.discount }}%off
+            </p>
+            <h4>Special price</h4>
+            <p class="text-xl font-semibold mt-2">
+              MRP: {{ SellingPrice(product) }}
+            </p>
+          </div>
+
+          <!-- Product Details -->
+          <div class="mb-6">
+            <h2 class="text-xl font-semibold text-gray-800 mb-2">
+              {{ product.shortdiscription }}
+            </h2>
+            <!-- <p class="text-gray-700 mb-4">{{ product.shortdiscription }}</p> -->
+          </div>
+
+          <!-- Product Description -->
+          <div class="mb-6">
+            <h2 class="text-xl font-semibold text-gray-800 mb-2">
+              Description
+            </h2>
+            <p class="text-gray-600 leading-relaxed">
+              {{ product.discription }}
+            </p>
+            <!-- <pre>to discover discription in flex way</pre> -->
+          </div>
+
+          <!-- Add to Cart Button -->
+          <div class="mb-6 flex item-center flex justify-between">
+            <div class="flex gap-8">
+              <button
+                mat-raised-button
+                color="white"
+                (click)="addToWishList(product)"
+              >
+                @if(isInWishlist(product)){
+                <ng-container>
+                  <mat-icon class="text-red-500">favorite</mat-icon>Remove to
+                  Wishlist </ng-container
+                >}@else {
+                <ng-container>
+                  <mat-icon class="text-red-500">favorite_border</mat-icon>Add
+                  to Wishlist
+                </ng-container>
+                }
+              </button>
+            </div>
+
+            <div class="flex gap-8">
+              <button
+                mat-raised-button
+                color="primary"
+                (click)="addToCart(product!)"
+              >
+                @if(isProductInCart(product._id!)){
+                <ng-container>
+                  <mat-icon class="text-red-500">favorite</mat-icon>remove from
+                  Cart
+                </ng-container>
+                }@else {
+                <ng-container>
+                  <mat-icon class="text-red-500">favorite_border</mat-icon>Add
+                  to Cart
+                </ng-container>
+                }
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      @if(similarProducts.length){
+      <div class="relative flex-col item center">
+        <h2 class="text-2xl font-bold">Similar Products</h2>
+        <div class="flex gap-1 mr-4">
+          @for (product of similarProducts; track $index) {
+          <div class="w-2/12 shadow">
+            <html lang="en">
+              <app-product-card [product]="product"></app-product-card>
+            </html>
+          </div>
+          }
+        </div>
+      </div>
+      }
+
+      <!-- Product Reviews Section -->
+      <div class="mt-8">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-4">
+          Product Reviews
+        </h2>
+        <div class="bg-white rounded-lg shadow-lg p-4">
+          <div class="mb-4">
+            <p class="text-gray-800 font-semibold">
+              John Doe
+              <span class="text-sm text-gray-500">- July 24, 2024</span>
+            </p>
+            <p class="text-yellow-500">★★★★☆</p>
+            <p class="text-gray-600">
+              This product is really good! It met my expectations and I would
+              definitely recommend it to others.
+            </p>
+          </div>
+          <div class="mb-4">
+            <p class="text-gray-800 font-semibold">
+              Jane Smith
+              <span class="text-sm text-gray-500">- August 1, 2024</span>
+            </p>
+            <p class="text-yellow-500">★★★☆☆</p>
+            <p class="text-gray-600">
+              The product is decent but has a few flaws that could be improved.
+            </p>
+          </div>
+          <div>
+            <p class="text-gray-800 font-semibold">
+              Alex Johnson
+              <span class="text-sm text-gray-500">- August 5, 2024</span>
+            </p>
+            <p class="text-yellow-500">★★★★★</p>
+            <p class="text-gray-600">
+              Excellent product! Exceeded my expectations. Will definitely buy
+              again.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> </ng-container
+>} @else {
+<h2>Loding....</h2>
+}

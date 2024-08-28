@@ -1,0 +1,58 @@
+<header>
+  <div class="top-header">
+    <div class="logo cursor-pointer" routerLink="/">
+      <!-- <img src="\assets\logo.png.jpeg" alt="Logo" /> -->
+      <span>My shop</span>
+    </div>
+
+    <div class="search-bar">
+      <input
+        type="text"
+        placeholder="Search..."
+        [(ngModel)]="searchTerm"
+        (keyup.enter)="onSearch($event)"
+      />
+      <!-- <button type="submit"><i class="fas fa-search"></i></button> -->
+    </div>
+
+    <div class="profile">
+      @if (authService.isLoggedIn) {
+      <!-- Admin Check -->
+      @if (authService.isAdmin) {
+      <a routerLink="/admin">{{ authService.userName }}</a>
+      <!-- <a routerLink="/orders">Orders</a> -->
+      } @else {
+      <!-- Non-admin User Links -->
+      <a routerLink="/profile">{{ authService.userName }}</a>
+      <a routerLink="/wishlists">
+        <mat-icon class="text-red-500">favorite</mat-icon>
+      </a>
+      <a routerLink="/cart">
+        <mat-icon class="text-blue-500">shopping_cart</mat-icon>
+      </a>
+      <a routerLink="/orders">Orders</a>
+      }
+      <a (click)="logout()" class="cursor-pointer ml-2">Logout</a>
+      } @else {
+      <!-- Non-Logged-In User Links -->
+      <a routerLink="/login" class="cursor-pointer ml-2">LogIn</a>
+      <a routerLink="/register" class="cursor-pointer ml-2">Register</a>
+      }
+    </div>
+  </div>
+
+  <div>
+    <!-- Show Categories if Logged In -->
+    @if (authService.isLoggedIn) {
+    <nav class="category-menu cursor-pointer">
+      <ul>
+        @for (category of categoryList; track $index) {
+        <li (click)="searchCategory(category._id!)" class="cursor-pointer">
+          <a>{{ category.name }}</a>
+        </li>
+        }
+      </ul>
+    </nav>
+    }
+  </div>
+</header>
